@@ -1,0 +1,9 @@
+The SDO_GEOMETRY type has the following general format:
+
+SDO_GEOMETRY( 
+ [geometry type],           --ID for point/line/polygon
+ [coordinate system],       --ID of coordinate system
+ [point coordinate],        --for points only
+ [line/polygon info],       --for lines/polygons only
+ [line/polygon coordinates] --for lines/polygons only
+  )
