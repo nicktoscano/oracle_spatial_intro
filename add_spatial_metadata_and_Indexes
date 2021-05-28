@@ -1,0 +1,73 @@
+--Add spatial metadata
+
+INSERT INTO USER_SDO_GEOM_METADATA VALUES (
+   'WAREHOUSES',
+   'GEOMETRY',
+   SDO_DIM_ARRAY(
+       SDO_DIM_ELEMENT(
+           'x', -180, 180, 0.05
+       ), SDO_DIM_ELEMENT(
+           'y', -90, 90, 0.05
+       )
+   ),
+   4326
+   );
+
+   INSERT INTO USER_SDO_GEOM_METADATA VALUES (
+   'BRANCHES',
+   'GEOMETRY',
+   SDO_DIM_ARRAY(
+       SDO_DIM_ELEMENT(
+           'x', -180, 180, 0.05
+       ), SDO_DIM_ELEMENT(
+           'y', -90, 90, 0.05
+       )
+   ),
+   4326
+   );
+
+   INSERT INTO USER_SDO_GEOM_METADATA VALUES (
+   'COASTAL_ZONE',
+   'GEOMETRY',
+   SDO_DIM_ARRAY(
+       SDO_DIM_ELEMENT(
+           'x', -180, 180, 0.05
+       ), SDO_DIM_ELEMENT(
+           'y', -90, 90, 0.05
+       )
+   ),
+   4326
+   );
+   
+   --Create spatial indexes
+   
+   CREATE INDEX WAREHOUSES_SIDX ON
+    WAREHOUSES (
+        GEOMETRY
+    )
+        INDEXTYPE IS MDSYS.SPATIAL_INDEX;
+
+CREATE INDEX BRANCHES_SIDX ON
+    BRANCHES (
+        GEOMETRY
+    )
+        INDEXTYPE IS MDSYS.SPATIAL_INDEX;
+
+CREATE INDEX COASTAL_ZONE_SIDX ON
+    COASTAL_ZONE (
+        GEOMETRY
+    )
+        INDEXTYPE IS MDSYS.SPATIAL_INDEX;
+        
+
+/* After the indexes are created, refresh the table listing. You will see 3 tables having names beginning with MDRT_. These are artifacts of the spatial indexes and are managed by Oracle Database automatically. You should never manually manipulate these tables.
+![Image alt text](../../../create-sample-data/images/refresh-tables-3.png) */
+
+
+--remove the items created
+
+    DROP TABLE BRANCHES;   
+    DROP TABLE WAREHOUSES;
+    DROP TABLE COASTAL_ZONE;
+    DELETE FROM USER_SDO_GEOM_METADATA;
+    COMMIT;
