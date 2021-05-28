@@ -1,0 +1,28 @@
+--Add geometry columns
+
+ALTER TABLE WAREHOUSES ADD (
+ GEOMETRY SDO_GEOMETRY
+);
+
+ALTER TABLE BRANCHES ADD (
+   GEOMETRY SDO_GEOMETRY
+);
+
+--Populate geometry columns
+
+UPDATE WAREHOUSES
+SET
+    GEOMETRY = SDO_GEOMETRY(
+        2001, 4326, SDO_POINT_TYPE(
+            LON, LAT, NULL
+        ), NULL, NULL
+    );
+ UPDATE BRANCHES
+ SET
+    GEOMETRY = SDO_GEOMETRY(
+        2001, 4326, SDO_POINT_TYPE(
+            LON, LAT, NULL
+        ), NULL, NULL
+    );
+    
+    
